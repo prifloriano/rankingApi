@@ -1,65 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Ranking API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um projeto de **API RESTful** desenvolvida em **Laravel 8** e com **MySQL** para gerenciamento de recordes pessoais de usuários em diferentes movimentos esportivos. A API permite retornar rankings de usuários baseados em seus recordes pessoais em cada movimento.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tecnologias Usadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Laravel 8** para o desenvolvimento da API.
+- **MySQL** como banco de dados relacional para armazenar informações de usuários, movimentos e recordes pessoais.
+- **Carbon** para formatação de datas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Observações
 
-## Learning Laravel
+- Este projeto não possui migrations pois o banco já existe
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Pré-requisitos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 7.3 ou superior.
+- Composer.
+- MySQL ou MariaDB para o banco de dados.
 
-## Laravel Sponsors
+## Descrição
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+A API oferece um endpoint para consultar o **ranking de um movimento específico**. Cada ranking contém informações como o nome do usuário, seu recorde pessoal, a posição dele no ranking e a data do recorde.
 
-### Premium Partners
+## Funcionalidades
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- Consultar o ranking de um movimento específico.
+- Exibir informações do usuário no ranking:
+  - Nome do usuário.
+  - Recorde pessoal (maior valor).
+  - Posição no ranking.
+  - Data do recorde.
+- Usuários com o mesmo recorde pessoal ocupam a mesma posição no ranking.
 
-## Contributing
+## Endpoints
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### GET /ranking/{movementId}
 
-## Code of Conduct
+Retorna o ranking de um movimento especificado, com base no ID do movimento.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+curl -X GET "http://127.0.0.1:8000/ranking/1"
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Parâmetros:**
+- `movementId` (obrigatório): ID do movimento esportivo para o qual o ranking será gerado.
 
-## License
+**Resposta de exemplo:**
+```json
+{
+    "movement": "Deadlift",
+    "ranking": [
+        {
+            "nome": "Jose",
+            "recorde": 190,
+            "posicao": 1,
+            "data": "04/01/2021 "
+        },
+        {
+            "nome": "Joao",
+            "recorde": 180,
+            "posicao": 2,
+            "data": "01/01/2021"
+        },
+        {
+            "nome": "Paulo",
+            "recorde": 170,
+            "posicao": 3,
+            "data": "01/01/2021"
+        }
+    ]
+}
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# rankingApi
+
+
